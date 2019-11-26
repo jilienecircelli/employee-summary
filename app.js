@@ -1,12 +1,12 @@
 const fs = require("fs")
 const inquirer = require("inquirer")
-const employeeGen = require("./lib/employee")
-const Engineer = require("./lib/engineer")
-const Intern = require("./lib/intern")
-const Manager = require("./lib/manager")
-const teamMembers = [];
+let renderFile = require("./render")
+const generateManager = renderFile.createManager
+const generateEngineer = renderFile.createEngineer
+const generateIntern = renderFile.createIntern
+const renderHTML = renderFile.renderMain
 
-function init() {
+function askQuestions() {
 
     inquirer
         .prompt([{
@@ -41,7 +41,9 @@ function init() {
                                 message: "What is your GitHub username?",
                                 name: "github"
                             }).then(
-                                // new class within array
+                                function(name, id, email, github) {
+                                    generateEngineer()
+                                }
                             )
                         }
                         break
@@ -52,7 +54,11 @@ function init() {
                                 type: "input",
                                 message: "What school do you attend?",
                                 name: "school"
-                            }).then()
+                            }).then(
+                                function(name, id, email, school) {
+                                    generateIntern()
+                                }
+                            )
                         }
                         break
                     case "Manager":
@@ -62,12 +68,39 @@ function init() {
                                 type: "input",
                                 message: "What is your Office Number?",
                                 name: "officeNumber"
-                            }).then()
+                            }).then(
+                                function(name, id, email, officeNumber) {
+                                    generateManager()
+                                }
+                            )
                         }
                         break
                 }
-
             })
+
 }
 
-init();
+function addOtherMembers() {
+    inquirer.prompt({
+        type: "list",
+        message: "Add other Team Members?",
+        name: "addOtherMembers",
+        choices: ["Yes", "No"]
+    }).then(
+        function(choice) {
+            if (choice === "Yes") {
+                askQuestions()
+            } else {
+                renderHTML()
+            }
+        }
+    )
+
+}
+
+function init() {
+    askQuestions()
+    addOtherMembers()
+}
+
+init()
