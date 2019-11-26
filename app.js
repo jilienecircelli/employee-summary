@@ -42,7 +42,7 @@ function askQuestions() {
                                 name: "github"
                             }).then(
                                 function(name, id, email, github) {
-                                    generateEngineer()
+                                    generateEngineer(name, id, email, github)
                                 }
                             )
                         }
@@ -56,7 +56,7 @@ function askQuestions() {
                                 name: "school"
                             }).then(
                                 function(name, id, email, school) {
-                                    generateIntern()
+                                    generateIntern(name, id, email, school)
                                 }
                             )
                         }
@@ -70,14 +70,14 @@ function askQuestions() {
                                 name: "officeNumber"
                             }).then(
                                 function(name, id, email, officeNumber) {
-                                    generateManager()
+                                    generateManager(name, id, email, officeNumber)
                                 }
                             )
                         }
                         break
                 }
             })
-
+    addOtherMembers()
 }
 
 function addOtherMembers() {
@@ -100,7 +100,6 @@ function addOtherMembers() {
 
 function init() {
     askQuestions()
-    addOtherMembers()
 }
 
 init()
