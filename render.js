@@ -12,12 +12,14 @@ let teamMembers = ""
 const renderManager = manager => {
     let template = fs.readFileSync(path.resolve(templateDir, "manager.html"), "utf8");
     var managerHtml = ""
+    console.log("HELP", manager.getName())
     managerHtml = managerHtml + template.replace(/{{ name }}/g, manager.getName())
         .replace(/{{ role }}/g, manager.getRole())
         .replace(/{{ email }}/g, manager.getEmail())
         .replace(/{{ id }}/g, manager.getId())
         .replace(/{{ officeNumber }}/g, manager.getOfficeNumber())
     teamMembers = teamMembers + managerHtml;
+    console.log(managerHtml)
 };
 
 const renderEngineer = engineer => {
@@ -29,6 +31,7 @@ const renderEngineer = engineer => {
         .replace(/{{ id }}/g, engineer.getId())
         .replace(/{{ github }}/g, engineer.getGithub())
     teamMembers = teamMembers + engineerHtml;
+    console.log(engineerHtml)
 };
 
 const renderIntern = intern => {
@@ -40,6 +43,7 @@ const renderIntern = intern => {
         .replace(/{{ id }}/g, intern.getId())
         .replace(/{{ school }}/g, intern.getSchool())
     teamMembers = teamMembers + internHtml;
+    console.log(internHtml)
 };
 
 
@@ -66,7 +70,12 @@ function renderMain() {
     mainHtml = mainHtml + mainTemplate.replace(/{{ team }}/g, teamMembers)
     let file = path.join(__dirname, 'output', "/index.html");
     console.log(file);
-    fs.writeFileSync(file, mainHtml);
+    fs.writeFile(file, mainHtml, function(err) {
+        if (err) {
+            throw new Error(err)
+        }
+        console.log('done writing file')
+    })
 }
 
 module.exports = {

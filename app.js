@@ -34,72 +34,75 @@ function askQuestions() {
             function({ name, id, email, role }) {
                 switch (role) {
                     case "Engineer":
-                        {
-                            inquirer
+                        //{
+                        inquirer
                             .prompt({
                                 type: "input",
                                 message: "What is your GitHub username?",
                                 name: "github"
                             }).then(
-                                function(name, id, email, github) {
+                                function({ github }) {
                                     generateEngineer(name, id, email, github)
+                                    addOtherMembers()
                                 }
                             )
-                        }
+                            //}
                         break
                     case "Intern":
-                        {
-                            inquirer
+                        //{
+                        inquirer
                             .prompt({
                                 type: "input",
                                 message: "What school do you attend?",
                                 name: "school"
                             }).then(
-                                function(name, id, email, school) {
+                                function({ school }) {
                                     generateIntern(name, id, email, school)
+                                    addOtherMembers()
                                 }
                             )
-                        }
+                            //}
                         break
                     case "Manager":
-                        {
-                            inquirer
+                        //{
+                        inquirer
                             .prompt({
                                 type: "input",
                                 message: "What is your Office Number?",
                                 name: "officeNumber"
                             }).then(
-                                function(name, id, email, officeNumber) {
+                                function({ officeNumber }) {
                                     generateManager(name, id, email, officeNumber)
+                                    addOtherMembers()
                                 }
                             )
-                        }
+                            //}
                         break
                 }
             })
-    addOtherMembers()
+
 }
 
 function addOtherMembers() {
     inquirer.prompt({
-        type: "list",
-        message: "Add other Team Members?",
-        name: "addOtherMembers",
-        choices: ["Yes", "No"]
-    }).then(
-        function(choice) {
-            if (choice === "Yes") {
-                askQuestions()
-            } else {
-                renderHTML()
+            type: "confirm",
+            message: "Add other Team Members?",
+            name: "addOtherMembers"
+        }).then(
+            function({ addOtherMembers }) {
+                console.log("add other members", addOtherMembers)
+                if (addOtherMembers) {
+                    askQuestions()
+                } else {
+                    renderHTML()
+                }
             }
-        }
-    )
-
+        )
+        .catch(err => {
+            console.log("Error adding other members", err)
+            throw err
+        })
 }
 
-function init() {
-    askQuestions()
-}
 
-init()
+askQuestions()
