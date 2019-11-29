@@ -34,7 +34,6 @@ function askQuestions() {
             function({ name, id, email, role }) {
                 switch (role) {
                     case "Engineer":
-                        //{
                         inquirer
                             .prompt({
                                 type: "input",
@@ -46,10 +45,8 @@ function askQuestions() {
                                     addOtherMembers()
                                 }
                             )
-                            //}
                         break
                     case "Intern":
-                        //{
                         inquirer
                             .prompt({
                                 type: "input",
@@ -61,10 +58,8 @@ function askQuestions() {
                                     addOtherMembers()
                                 }
                             )
-                            //}
                         break
                     case "Manager":
-                        //{
                         inquirer
                             .prompt({
                                 type: "input",
@@ -76,7 +71,6 @@ function askQuestions() {
                                     addOtherMembers()
                                 }
                             )
-                            //}
                         break
                 }
             })

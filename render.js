@@ -12,7 +12,6 @@ let teamMembers = ""
 const renderManager = manager => {
     let template = fs.readFileSync(path.resolve(templateDir, "manager.html"), "utf8");
     var managerHtml = ""
-    console.log("HELP", manager.getName())
     managerHtml = managerHtml + template.replace(/{{ name }}/g, manager.getName())
         .replace(/{{ role }}/g, manager.getRole())
         .replace(/{{ email }}/g, manager.getEmail())
